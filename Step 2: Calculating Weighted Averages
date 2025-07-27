@@ -1,5 +1,3 @@
-#Analysis: Calculating weighted averages
-
 # Calculate population-weighted averages
 # Convert '2022_projected_births' to numeric, coercing errors
 df_merged['2022_projected_births'] = pd.to_numeric(df_merged['2022_projected_births'], errors='coerce')
