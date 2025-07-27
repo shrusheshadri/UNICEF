@@ -1,5 +1,8 @@
+#Cleaning and merging the raw data files
+
 import pandas as pd
 import re
+
 # Load demographic data with the correct header (row 0) and rename columns
 df_demographic = pd.read_excel("/content/WPP2022_GEN_F01_DEMOGRAPHIC_INDICATORS_COMPACT_REV1.xlsx", header=0)
 
@@ -20,13 +23,14 @@ demographic_irrelevant_more = [
     'note: regional aggregates are based on the latest available country classification.',
     'population', 'fertility', 'mortality', 'migration' # Remove the aggregated header rows
 ]
-
 df_demographic = df_demographic[~df_demographic['Country'].isin(demographic_irrelevant_more)]
-df_demographic = df_demographic.dropna(subset=['Country'])
 
-# Filter out rows where 'Type' is not 'Country' to remove regional aggregations etc.
+# Remove filtering by 'Type' == 'Country' to retain necessary rows
 if 'Type' in df_demographic.columns:
-    df_demographic = df_demographic[df_demographic['Type'] == 'Country']
+     df_demographic = df_demographic[df_demographic['Type'] == 'Country']
+
+
+df_demographic = df_demographic.dropna(subset=['Country'])
 
 
 # Load the other two dataframes (assuming they are already cleaned from previous steps)
