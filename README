@@ -3,9 +3,7 @@ This project calculates population-weighted averages for key maternal and newbor
 
 📌 Objectives
 📈 Compute population-weighted averages of health coverage indicators using projected birth counts.
-
 🌐 Compare performance across U5MR-defined groups (e.g., high, moderate, low mortality burden).
-
 📊 Prepare data for visualizations and evidence-based policy discussions.
 
 🧮 Methodology
@@ -26,13 +24,9 @@ Weighted Average=
 ∑births
 ∑(coverage×births)
 ​
-
 Handles missing values and zero-population entries to ensure statistical robustness.
 
 📂 Directory Structure
-bash
-Copy
-Edit
 UNICEF/
 ├── weighted_coverage_analysis.py   # Main Python script for data processing
 ├── coverage_data.csv               # Health coverage indicators (input)
