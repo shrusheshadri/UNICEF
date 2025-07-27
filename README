@@ -11,18 +11,7 @@ Indicators are extracted from UNICEF's datasets.
 Countries are grouped by their Status.U5MR classification.
 Weighted averages are calculated using:
 Weighted Average
-=
-∑
-(
-coverage
-×
-births
-)
-∑
-births
-Weighted Average= 
-∑births
-∑(coverage×births)
+Weighted Average= ∑births / ∑(coverage×births)
 ​
 Handles missing values and zero-population entries to ensure statistical robustness.
 
