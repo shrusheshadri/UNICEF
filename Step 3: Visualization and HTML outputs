@@ -1,0 +1,77 @@
+#Visualization and producing HTML outputs
+
+import matplotlib.pyplot as plt
+import numpy as np
+import base64
+from io import BytesIO
+from IPython.display import HTML, display
+
+# Assuming weighted_averages dictionary is available from the previous section
+
+# Prepare data for plotting
+statuses = list(weighted_averages.keys())
+anc4_coverage = [weighted_averages[status].get('Antenatal care 4+ visits - percentage of women (aged 15-49 years) attended at least four times during pregnancy by any provider', 0) for status in statuses]
+sba_coverage = [weighted_averages[status].get('Skilled birth attendant - percentage of deliveries attended by skilled health personnel', 0) for status in statuses]
+
+x = np.arange(len(statuses))  # the label locations
+width = 0.35  # the width of the bars
+
+fig, ax = plt.subplots(figsize=(10, 6))
+rects1 = ax.bar(x - width/2, anc4_coverage, width, label='ANC4+ Coverage')
+rects2 = ax.bar(x + width/2, sba_coverage, width, label='SBA Coverage')
+
+# Add some text for labels, title and custom x-axis tick labels, etc.
+ax.set_ylabel('Population-Weighted Coverage (%)')
+ax.set_title('Population-Weighted Coverage by U5MR Status')
+ax.set_xticks(x)
+ax.set_xticklabels(statuses)
+ax.legend()
+
+# Add value labels on top of the bars
+def autolabel(rects):
+    """Attach a text label above each bar in *rects*, displaying its height."""
+    for rect in rects:
+        height = rect.get_height()
+        # Only add label if height is a valid number and not zero
+        if isinstance(height, (int, float)) and height > 0:
+            ax.annotate(f'{height:.1f}',
+                        xy=(rect.get_x() + rect.get_width() / 2, height),
+                        xytext=(0, 3),  # 3 points vertical offset
+                        textcoords="offset points",
+                        ha='center', va='bottom')
+
+autolabel(rects1)
+autolabel(rects2)
+
+fig.tight_layout()
+
+# Save the plot to a BytesIO object
+buf = BytesIO()
+plt.savefig(buf, format='png')
+plt.close(fig)  # Close the plot to prevent it from displaying twice
+data = base64.b64encode(buf.getvalue()).decode('utf-8')
+buf.close()
+
+# Interpretation paragraph
+interpretation = """
+The visualization displays the population-weighted averages for Antenatal Care (ANC4+) and Skilled Birth Attendant (SBA) coverage across countries grouped by their Under-Five Mortality Rate (U5MR) status: 'Acceleration Needed', 'Achieved', and 'On Track'. The 'Achieved' group, representing countries that have met their U5MR reduction targets, shows the highest population-weighted coverage for both ANC4+ and SBA. The 'On Track' group, making sufficient progress, also exhibits relatively high coverage. Conversely, the 'Acceleration Needed' group, which are not on track to meet their U5MR targets, demonstrates the lowest population-weighted coverage for both indicators. This suggests a strong correlation between higher levels of maternal and child health service coverage and better progress in reducing under-five mortality. A key caveat is that these are population-weighted averages, meaning countries with larger populations have a greater influence on the average for their respective groups. Additionally, the analysis relies on the availability and quality of data for each indicator and the accuracy of the U5MR status classifications and 2022 projected births data. Missing data for some countries or indicators could impact the weighted averages.
+"""
+
+# Generate HTML output
+html_output = f"""
+<!DOCTYPE html>
+<html>
+<head>
+<title>Population-Weighted Coverage Report</title>
+</head>
+<body>
+    <h1>Population-Weighted Coverage by U5MR Status</h1>
+    <img src="data:image/png;base64,{data}" alt="Population-Weighted Coverage by U5MR Status Bar Chart">
+    <h2>Interpretation of Results</h2>
+    <p>{interpretation}</p>
+</body>
+</html>
+"""
+
+# Display the HTML output
+display(HTML(html_output))
