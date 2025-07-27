@@ -6,6 +6,10 @@ import re
 # Load demographic data without a header to inspect the structure
 df_demographic_raw = pd.read_excel("/content/WPP2022_GEN_F01_DEMOGRAPHIC_INDICATORS_COMPACT_REV1.xlsx", header=None)
 
+import os
+if not os.path.exists("your_path.xlsx"):
+    print("File not found.")
+
 # Use row 16 as the header and rows from 17 onwards as data
 header_row_index = 16
 data_start_row_index = 17
@@ -69,7 +73,6 @@ if 'Variant' in df_demographic.columns:
     df_demographic = df_demographic[df_demographic['Variant'] == 'Estimates']
 
 # Based on inspection, filter out rows where 'Year' is not 2022 to get only 2022 data
-if 'Year' in df_demographic.columns:
     # Need to handle potential multi-level column index after setting header from row 16
     # Access the 'Year' column correctly based on the actual column names
     # Assuming 'Year' is a top-level column name after setting header=16
