@@ -1,3 +1,69 @@
-Structure of the Repository
-Purpose of Files and Folders
-Instructions for Analysis
+🌍 UNICEF Maternal & Child Health Coverage Analysis
+This project calculates population-weighted averages for key maternal and newborn health indicators—antenatal care (4+ visits) and skilled birth attendance—across country groups categorized by under-five mortality rate (U5MR) status. By weighting these indicators using projected birth data, the analysis presents a more accurate reflection of coverage in high- and low-burden contexts.
+
+📌 Objectives
+📈 Compute population-weighted averages of health coverage indicators using projected birth counts.
+
+🌐 Compare performance across U5MR-defined groups (e.g., high, moderate, low mortality burden).
+
+📊 Prepare data for visualizations and evidence-based policy discussions.
+
+🧮 Methodology
+Indicators are extracted from UNICEF's datasets.
+Countries are grouped by their Status.U5MR classification.
+Weighted averages are calculated using:
+Weighted Average
+=
+∑
+(
+coverage
+×
+births
+)
+∑
+births
+Weighted Average= 
+∑births
+∑(coverage×births)
+​
+
+Handles missing values and zero-population entries to ensure statistical robustness.
+
+📂 Directory Structure
+bash
+Copy
+Edit
+UNICEF/
+├── weighted_coverage_analysis.py   # Main Python script for data processing
+├── coverage_data.csv               # Health coverage indicators (input)
+├── births_projection.csv           # 2022 projected births (input)
+├── merged_data.csv                 # Cleaned and joined dataset
+├── output/                         # Folder for results and charts
+└── README.md                       # Project documentation
+
+📊 Dataset Sources
+📘 UNICEF Health Coverage Indicators
+UNICEF Data Portal
+
+👶 UN World Population Prospects – Birth Projections
+UN DESA Population Division
+
+⚰️ Under-Five Mortality Rate (U5MR) Classification
+UN IGME - Child Mortality
+
+🚀 How to Run
+Clone the repo:
+git clone https://github.com/UNICEF.git
+
+Install requirements:
+pip install pandas
+
+Run the script:
+python weighted_coverage_analysis.py
+
+📌 Notes
+This script assumes merged datasets with aligned country codes.
+All missing or anomalous values are handled gracefully.
+Ready for extension into bar plots or regional disaggregation.
+HTML files will be available as output
+
