@@ -1,77 +1,63 @@
-# Load the data
 import pandas as pd
-
-df_global_dataflow = pd.read_excel("/GLOBAL_DATAFLOW_2018-2022.xlsx", header=1)
-df_on_track = pd.read_excel("/On-track and off-track countries.xlsx")
-df_demographic = pd.read_excel("/WPP2022_GEN_F01_DEMOGRAPHIC_INDICATORS_COMPACT_REV1.xlsx", header=3)
-
-
-# Clean and standardize country identifiers
-df_global_dataflow.rename(columns={'Geographic area': 'Country'}, inplace=True)
-df_on_track.rename(columns={'OfficialName': 'Country'}, inplace=True)
-df_demographic.rename(columns={'Unnamed: 4': 'Country'}, inplace=True)
-
-df_global_dataflow['Country'] = df_global_dataflow['Country'].str.strip().str.lower()
-df_on_track['Country'] = df_on_track['Country'].str.strip().str.lower()
-df_demographic['Country'] = df_demographic['Country'].str.strip().str.lower()
-
 import re
+# Load demographic data with the correct header (row 0) and rename columns
+df_demographic = pd.read_excel("/content/WPP2022_GEN_F01_DEMOGRAPHIC_INDICATORS_COMPACT_REV1.xlsx", header=0)
 
-# Remove parenthesized text and leading/trailing spaces from df_global_dataflow
-df_global_dataflow['Country'] = df_global_dataflow['Country'].apply(lambda x: re.sub(r'\(.*?\)', '', str(x)).strip() if pd.notna(x) else x)
+# Rename columns to be more descriptive
+df_demographic.rename(columns={'Region, subregion, country or area *': 'Country', 'Births (thousands)': '2022_projected_births'}, inplace=True)
 
-# Remove rows from df_global_dataflow that are not countries
-regions_to_remove = ['africa', 'african union', 'americas', 'anguilla', 'arab maghreb union (amu)', 'arab states', 'asia and the pacific', 'caribbean', 'central africa (african union)', 'central america', 'central asia', 'central and southern asia', 'common market for eastern and southern africa (comesa)', 'community of sahel-saharan states (cen-sad)', 'east african community (eac)', 'east asia and pacific', 'east and southern africa', 'eastern africa', 'eastern africa (african union)', 'eastern asia', 'eastern europe and central asia', 'eastern mediterranean', 'eastern and south-eastern asia', 'eastern and southern africa', 'economic community of central african states (eccas)', 'economic community of west african states (ecowas 2025)', 'economic community of west african states (ecowas)', 'europe', 'europe and central asia', 'intergovernmental authority on development (igad)', 'latin america and the caribbean', 'least developed countries (ldc)', 'middle africa', 'middle east and north africa', 'north america', 'northern africa', 'northern africa (african union)', 'northern africa and western asia', 'northern america', 'oceania', 'oceania (exc. australia and new zealand)', 'sdg regions - global', 'south america', 'south asia', 'south sudan', 'south-east asia', 'south-eastern asia', 'southern africa', 'southern africa (african union)', 'southern african development community (sadc)', 'southern asia', 'sub-saharan africa', 'unicef programme regions - global', 'unicef reporting regions - global', 'west and central africa', 'western africa', 'western africa (african union)', 'western asia', 'western europe', 'western pacific', 'world bank (high income)', 'world bank (low income)', 'world bank (lower middle income)', 'world bank (upper middle income)', 'footnotes', 'unit multiplier: units', 'unit of measure: %', 'observation confidentaility: free', 'time period activity related to when the da', 'current age: 15 to 49 years old']
+# Standardize country names in demographic data
+df_demographic['Country'] = df_demographic['Country'].astype(str).str.strip().str.lower()
 
-df_global_dataflow = df_global_dataflow[~df_global_dataflow['Country'].isin(regions_to_remove)]
-
-# Clean up irrelevant entries in df_demographic
-demographic_irrelevant = ['united nations', 'population division', 'department of economic and social affairs', 'world population prospects 2022', 'country']
-df_demographic = df_demographic[~df_demographic['Country'].isin(demographic_irrelevant)]
-df_demographic = df_demographic.dropna(subset=['Country'])
-
-regions_to_remove_further = ['central africa', 'north africa', 'united nations economic commission for africa', 'west africa', 'arab maghreb union', 'common market for eastern and southern africa', 'community of sahel-saharan states', 'east african community', 'economic community of central african states', 'economic community of west african states', 'intergovernmental authority on development', 'least developed countries', 'southern african development community', 'world bank', 'time period activity related to when the data are collected: end of fieldwork']
-
-df_global_dataflow = df_global_dataflow[~df_global_dataflow['Country'].isin(regions_to_remove_further)]
-
-df_global_dataflow = df_global_dataflow.dropna(subset=['Country'])
-df_on_track = df_on_track.dropna(subset=['Country'])
-
+# Remove irrelevant entries from demographic data (based on previous cleaning steps and inspection)
 demographic_irrelevant_more = [
+    'index', 'variant', 'notes', 'location code', 'iso3 alpha-code', 'iso2 alpha-code', 'sdmx code**', 'type', 'parent code',
     'file gen/01/rev1: demographic indicators by region, subregion, country or area',
     'estimates, 1950 - 2021',
     'pop/db/wpp/rev.2022/gen/f01/rev.1',
     '© july 2022 by united nations, made available under a creative commons license cc by 3.0 igo: http://creativecommons.org/licenses/by/3.0/igo/',
     'suggested citation: united nations, department of economic and social affairs, population division (2022). world population prospects 2022, online edition.',
     'note: regional aggregates are based on the latest available country classification.',
-    'index', 'variant', 'region, subregion, country or area *', 'notes',
-    'location code', 'iso3 code', 'location type', 'parent code', 'year', 'population (thousands)',
-    'annual population change (percent)', 'medium fertility', 'low fertility', 'high fertility',
-    'constant fertility', 'instant replacement fertility', 'zero migration',
-    'median age (years)', 'natural change (thousands)', 'rate of natural change (per 1,000 population)',
-    'births (thousands)', 'crude birth rate (per 1,000 population)', 'deaths (thousands)',
-    'crude death rate (per 1,000 population)',
-    'total fertility rate (live births per woman)', 'net number of migrants (thousands)',
-    'net migration rate (per 1,000 population)', 'sex ratio (males per 100 females) as of 1 july',
-    'population density (persons per square km) as of 1 july', 'median age (years) as of 1 july',
-    'mean age childbearing (years) as of 1 july', 'life expectancy at birth, both sexes (years)',
-    'life expectancy at birth, male (years)', 'life expectancy at birth, female (years)',
-    'life expectancy at age 15, both sexes (years)', 'life expectancy at age 15, male (years)',
-    'life expectancy at age 15, female (years)', 'life expectancy at age 65, both sexes (years)',
-    'life expectancy at age 65, male (years)', 'life expectancy at age 65, female (years)',
-    'infant mortality rate (deaths per 1,000 live births)',
-    'under-five mortality rate (deaths per 1,000 live births)',
-    'mortality before age 60 (deaths per 1,000 live births)',
-    'mortality between age 15 and 60, both sexes (deaths per 1,000 population)',
-    'male mortality between age 15 and 60 (deaths under age 60 per 1,000 male population)',
-    'female mortality between age 15 and 60 (deaths under age 60 per 1,000 female population)'
+    'population', 'fertility', 'mortality', 'migration' # Remove the aggregated header rows
 ]
 
 df_demographic = df_demographic[~df_demographic['Country'].isin(demographic_irrelevant_more)]
 df_demographic = df_demographic.dropna(subset=['Country'])
 
+# Filter out rows where 'Type' is not 'Country' to remove regional aggregations etc.
+if 'Type' in df_demographic.columns:
+    df_demographic = df_demographic[df_demographic['Type'] == 'Country']
 
-# Filter and select recent data
+
+# Load the other two dataframes (assuming they are already cleaned from previous steps)
+df_global_dataflow = pd.read_excel("/GLOBAL_DATAFLOW_2018-2022.xlsx", header=1)
+df_on_track = pd.read_excel("/On-track and off-track countries.xlsx")
+
+# Clean and standardize country identifiers for global dataflow and on-track data (re-execute cleaning)
+df_global_dataflow.rename(columns={'Geographic area': 'Country'}, inplace=True)
+df_on_track.rename(columns={'OfficialName': 'Country'}, inplace=True)
+
+df_global_dataflow['Country'] = df_global_dataflow['Country'].astype(str).str.strip().str.lower()
+df_on_track['Country'] = df_on_track['Country'].astype(str).str.strip().str.lower()
+
+
+# Remove parenthesized text and leading/trailing spaces from df_global_dataflow (re-execute cleaning)
+df_global_dataflow['Country'] = df_global_dataflow['Country'].apply(lambda x: re.sub(r'\(.*?\)', '', str(x)).strip() if pd.notna(x) else x)
+
+# Remove rows from df_global_dataflow that are not countries (re-execute cleaning)
+regions_to_remove = ['africa', 'african union', 'americas', 'anguilla', 'arab maghreb union (amu)', 'arab states', 'asia and the pacific', 'caribbean', 'central africa (african union)', 'central america', 'central asia', 'central and southern asia', 'common market for eastern and southern africa (comesa)', 'community of sahel-Saharan states (cen-sad)', 'east african community (eac)', 'east asia and pacific', 'east and southern africa', 'eastern africa', 'eastern africa (african union)', 'eastern asia', 'eastern europe and central asia', 'eastern mediterranean', 'eastern and south-eastern asia', 'eastern and southern africa', 'economic community of central african states (eccas)', 'economic community of west african states (ecowas 2025)', 'economic community of west African states (ECOWAS)', 'europe', 'europe and central asia', 'intergovernmental authority on development (igad)', 'latin america and the caribbean', 'least developed countries (ldc)', 'middle africa', 'middle east and north africa', 'north america', 'northern africa', 'northern africa (african union)', 'northern africa and western asia', 'northern america', 'oceania', 'oceania (exc. australia and new zealand)', 'sdg regions - global', 'south america', 'south asia', 'south sudan', 'south-east asia', 'south-eastern asia', 'southern africa', 'southern africa (african union)', 'southern african development community (sadc)', 'southern asia', 'sub-saharan africa', 'unicef programme regions - global', 'unicef reporting regions - global', 'west and central africa', 'western africa', 'western africa (african union)', 'western asia', 'western europe', 'western pacific', 'world bank (high income)', 'world bank (low income)', 'world bank (lower middle income)', 'world bank (upper middle income)', 'footnotes', 'unit multiplier: units', 'unit of measure: %', 'observation confidentaility: free', 'time period activity related to when the da', 'current age: 15 to 49 years old']
+
+df_global_dataflow = df_global_dataflow[~df_global_dataflow['Country'].isin(regions_to_remove)]
+
+regions_to_remove_further = ['central africa', 'north africa', 'united nations economic commission for africa', 'west africa', 'arab maghreb union', 'common market for eastern and southern africa', 'community of sahel-Saharan states', 'east african community', 'economic community of central african states', 'economic community of west african states', 'intergovernmental authority on development', 'least developed countries', 'southern african development community', 'world bank', 'time period activity related to when the data are collected: end of fieldwork']
+
+df_global_dataflow = df_global_dataflow[~df_global_dataflow['Country'].isin(regions_to_remove_further)]
+
+df_global_dataflow = df_global_dataflow.dropna(subset=['Country'])
+df_on_track = df_on_track.dropna(subset=['Country'])
+
+
+# Filter and select recent data - re-execute
 df_global_dataflow_filtered = df_global_dataflow[
     df_global_dataflow['Indicator'].isin([
         'Antenatal care 4+ visits - percentage of women (aged 15-49 years) attended at least four times during pregnancy by any provider',
@@ -105,12 +91,9 @@ df_most_recent = df_melted_sorted.drop_duplicates(subset=['Country', 'Indicator'
 
 df_pivot = df_most_recent.pivot(index='Country', columns='Indicator', values='Value')
 
+
 # Merge the dataframes
 df_merged = pd.merge(df_pivot, df_on_track, on='Country', how='outer')
-df_merged = pd.merge(df_merged, df_demographic, on='Country', how='outer')
+df_merged = pd.merge(df_merged, df_demographic[['Country', '2022_projected_births']], on='Country', how='outer')
 
-# Verify the merged data
-display(df_merged.head())
-
-# Save the merged data
-df_merged.to_csv("merged_country_data.csv", index=False)
+# The df_merged dataframe is now ready for further analysis or calculations.
