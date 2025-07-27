@@ -6,15 +6,11 @@
 
 > Calculate and visualize population-weighted coverage of key maternal and newborn health indicators across countries and mortality groups.
 
----
-
 ## 📌 Objectives
 
 - **Compute** population-weighted averages for maternal & newborn health indicators using projected birth counts.
 - **Compare** performance across country groups defined by Under-5 Mortality Rate (U5MR).
 - **Prepare** clean data for visualizations and policy discussions.
-
----
 
 ## 🧮 Methodology
 
@@ -29,8 +25,6 @@
 4. **Robustness**  
    Handles missing values and zero-population entries for statistical accuracy.
 
----
-
 ## 📂 Directory Structure
 
 ```text
@@ -41,9 +35,7 @@ UNICEF/
 ├── merged_data.csv                 # Cleaned dataset
 ├── output/                         # Results & charts
 └── README.md                       # Documentation
-```
 
----
 
 ## 📊 Dataset Sources
 
@@ -53,22 +45,17 @@ UNICEF/
 | 👶 UN World Population Prospects | Birth projections | [UN DESA Population Division](https://population.un.org/wpp/) |
 | ⚰️ U5MR Classification | Mortality rates | [UN IGME - Child Mortality](https://childmortality.org/) |
 
----
 
 ## 🚀 Quickstart
 
-```bash
 # 1. Clone the repository
 git clone https://github.com/UNICEF.git
-cd UNICEF
 
 # 2. Install requirements
 pip install pandas
 
 # 3. Run the analysis script
 python weighted_coverage_analysis.py
-```
-
 ---
 
 ## 💡 Notes
