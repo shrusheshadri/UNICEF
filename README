@@ -8,11 +8,11 @@ Prepare clean data for visualizations and provide interpretations for policy dis
 
 🧮 Methodology
 Indicator Extraction: Data is sourced from official UNICEF datasets.
-| 📚 Source                            | 💬 Description                | 🔗 Link                                                      |
-| ------------------------------------ | ----------------------------- | ------------------------------------------------------------- |
-| 📘 UNICEF Health Coverage Indicators | Maternal & newborn indicators | [UNICEF Data Portal](https://data.unicef.org/)                |
-| 👶 UN World Population Prospects     | Birth projections             | [UN DESA Population Division](https://population.un.org/wpp/) |
-| ⚰️ U5MR Classification               | Mortality rates by country    | [UN IGME - Child Mortality](https://childmortality.org/)      |
+|            📚 Source                 |       💬 Description         |                                                     
+| ------------------------------------ | ----------------------------- | 
+| 📘 UNICEF Health Coverage Indicators | Maternal & newborn indicators | 
+| 👶 UN World Population Prospects     | Birth projections             | 
+| ⚰️ U5MR Classification               | Mortality rates by country    | 
 
 Country Grouping: Based on Status.U5MR classification (high, moderate, low mortality).
 Population-Weighted Average:
