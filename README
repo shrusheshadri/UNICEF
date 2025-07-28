@@ -4,14 +4,19 @@ Calculate and visualize population-weighted coverage of key maternal and newborn
 📌 Objectives
 Compute population-weighted averages for maternal & newborn health indicators using projected birth counts.
 Compare performance across country groups defined by Under-5 Mortality Rate (U5MR).
-Prepare clean data for visualizations and policy discussions.
+Prepare clean data for visualizations and provide interpretations for policy discussions.
 
 🧮 Methodology
 Indicator Extraction: Data is sourced from official UNICEF datasets.
+| 📚 Source                            | 💬 Description                | 🔗 Link                                                      |
+| ------------------------------------ | ----------------------------- | ------------------------------------------------------------- |
+| 📘 UNICEF Health Coverage Indicators | Maternal & newborn indicators | [UNICEF Data Portal](https://data.unicef.org/)                |
+| 👶 UN World Population Prospects     | Birth projections             | [UN DESA Population Division](https://population.un.org/wpp/) |
+| ⚰️ U5MR Classification               | Mortality rates by country    | [UN IGME - Child Mortality](https://childmortality.org/)      |
+
 Country Grouping: Based on Status.U5MR classification (high, moderate, low mortality).
 Population-Weighted Average:
-Weighted Average=∑(coverage×births)∑births
-Weighted Average= ∑births / ∑(coverage×births)
+Weighted Average= ∑(coverage × births)/ ∑births
 ​ 
 Robustness: Handles missing values and zero-population entries for statistical accuracy.
 
