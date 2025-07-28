@@ -1,66 +1,63 @@
-# 🌍 UNICEF Maternal & Child Health Coverage Analysis
+🌍 UNICEF Maternal & Child Health Coverage Analysis
+Calculate and visualize population-weighted coverage of key maternal and newborn health indicators across countries and mortality groups.
 
-[![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://www.python.org/)
-[![UNICEF Data](https://img.shields.io/badge/Data-UNICEF-blue)](https://data.unicef.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+📌 Objectives
+Compute population-weighted averages for maternal & newborn health indicators using projected birth counts.
+Compare performance across country groups defined by Under-5 Mortality Rate (U5MR).
+Prepare clean data for visualizations and policy discussions.
 
-> Calculate and visualize population-weighted coverage of key maternal and newborn health indicators across countries and mortality groups.
+🧮 Methodology
+Indicator Extraction: Data is sourced from official UNICEF datasets.
+Country Grouping: Based on Status.U5MR classification (high, moderate, low mortality).
+Population-Weighted Average:
+Weighted Average=∑(coverage×births)∑births
+Weighted Average= ∑births / ∑(coverage×births)
+​ 
+Robustness: Handles missing values and zero-population entries for statistical accuracy.
 
-## 📌 Objectives
+📂 Folder Structure
+UNICEF_MNCH_Coverage/
+├── data/
+│   ├── coverage_data.csv             # Health coverage indicators
+│   ├── births_projection.csv         # Projected births (2022)
+│   └── merged_data.csv               # Cleaned, merged dataset
+│
+├── scripts/
+│   ├── weighted_coverage_analysis.py # Main analysis script
+│   ├── run_project.py                # Orchestrates full analysis workflow
+│   └── user_profile.py               # Reproducibility & environment setup
+│
+├── output/
+│   └── coverage_summary.csv          # Final output data
+│
+├── requirements.txt                  # Required Python packages
+├── README.md                         # Project documentation
+└── LICENSE
+📊 Dataset Sources
+📘 UNICEF Health Coverage Indicators Maternal & newborn indicators	UNICEF Data Portal
+👶 UN World Population Prospects	Birth projections	UN DESA Population Division
+⚰️ U5MR Classification	Mortality rates by country	UN IGME - Child Mortality
 
-- **Compute** population-weighted averages for maternal & newborn health indicators using projected birth counts.
-- **Compare** performance across country groups defined by Under-5 Mortality Rate (U5MR).
-- **Prepare** clean data for visualizations and policy discussions.
+⚙️ Reproducibility
+user_profile.py sets up environment variables, locale, and working directory.
+Code adheres to modular structure and avoids hardcoding paths.
+All dependencies are listed in requirements.txt.
+Data files stored in data/ and outputs in output/.
+Entire workflow can be rerun using run_project.py.
 
-## 🧮 Methodology
-
-1. **Indicator Extraction**  
-   Data is sourced from official UNICEF datasets.
-2. **Country Grouping**  
-   Based on `Status.U5MR` classification (high, moderate, low mortality).
-3. **Population-Weighted Average**  
-   \[
-   \text{Weighted Average} = \frac{\sum (\text{coverage} \times \text{births})}{\sum \text{births}}
-   \]
-4. **Robustness**  
-   Handles missing values and zero-population entries for statistical accuracy.
-
-## 📂 Directory Structure
-
-```text
-UNICEF/
-├── weighted_coverage_analysis.py   # Main Python script
-├── coverage_data.csv               # Health coverage indicators
-├── births_projection.csv           # Projected births (2022)
-├── merged_data.csv                 # Cleaned dataset
-├── output/                         # Results & charts
-└── README.md                       # Documentation
-
-
-## 📊 Dataset Sources
-
-| Source | Description | Link |
-| ------ | ----------- | ---- |
-| 📘 UNICEF Health Coverage Indicators | Maternal & newborn indicators | [UNICEF Data Portal](https://data.unicef.org/) |
-| 👶 UN World Population Prospects | Birth projections | [UN DESA Population Division](https://population.un.org/wpp/) |
-| ⚰️ U5MR Classification | Mortality rates | [UN IGME - Child Mortality](https://childmortality.org/) |
-
-
-## 🚀 Quickstart
+🚀 Quickstart
 
 # 1. Clone the repository
-git clone https://github.com/UNICEF.git
+git clone https://github.com/<your-username>/UNICEF_MNCH_Coverage.git
+cd UNICEF_MNCH_Coverage
 
-# 2. Install requirements
-pip install pandas
+# 2. Set up the environment
+pip install -r requirements.txt
 
-# 3. Run the analysis script
-python weighted_coverage_analysis.py
----
+# 3. Run the complete workflow
+python scripts/run_project.py
+📄 Outputs
+coverage_summary.csv in /output folder containing weighted averages.
+Print-friendly tables and visual outputs can be added for policy use.
 
-## 💡 Notes
 
-- Assumes merged datasets with aligned country codes.
-- Handles missing/anomalous values gracefully.
-- Ready to extend to visualizations and regional breakdowns.
-- Output includes summary tables and (optionally) HTML files.
