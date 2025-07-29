@@ -21,21 +21,18 @@ Weighted Average= ∑(coverage × births)/ ∑births
 Robustness: Handles missing values and zero-population entries for statistical accuracy.
 
 📂 Folder Structure
-UNICEF_MNCH_Coverage/
-├── data/
-│   ├── coverage_data.csv             # Health coverage indicators
-│   ├── births_projection.csv         # Projected births (2022)
-│   └── merged_data.csv               # Cleaned, merged dataset
+├── Raw data/
+│   ├── Raw Data/WPP2022_GEN_F01_DEMOGRAPHIC_INDICATORS_COMPACT_REV1.xlsx             # Health coverage indicators
+│   ├── Raw Data/GLOBAL_DATAFLOW_2018-2022.xlsx                                       # Projected births (2022)
+│   └── Raw Data/merged_country_data.csv                                              # Cleaned, merged dataset
 │
 ├── scripts/
-│   ├── weighted_coverage_analysis.py # Main analysis script
 │   ├── run_project.py                # Orchestrates full analysis workflow
 │   └── user_profile.py               # Reproducibility & environment setup
 │
 ├── output/
-│   └── coverage_summary.csv          # Final output data
-│
-├── requirements.txt                  # Required Python packages
+│   └── Output/Results_html.png       # Final output data
+
 ├── README.md                         # Project documentation
 └── LICENSE
 📊 Dataset Sources
@@ -45,24 +42,9 @@ UNICEF_MNCH_Coverage/
 
 ⚙️ Reproducibility
 user_profile.py sets up environment variables, locale, and working directory.
-Code adheres to modular structure and avoids hardcoding paths.
-All dependencies are listed in requirements.txt.
-Data files stored in data/ and outputs in output/.
+run_project.py code adheres to modular structure and avoids hardcoding paths.
+All dependencies are listed in user_profile.py
+Data files stored in Raw data/ and outputs in Output/.
 Entire workflow can be rerun using run_project.py.
-
-🚀 Quickstart
-
-# 1. Clone the repository
-git clone https://github.com/<your-username>/UNICEF_MNCH_Coverage.git
-cd UNICEF_MNCH_Coverage
-
-# 2. Set up the environment
-pip install -r requirements.txt
-
-# 3. Run the complete workflow
-python scripts/run_project.py
-📄 Outputs
-coverage_summary.csv in /output folder containing weighted averages.
-Print-friendly tables and visual outputs can be added for policy use.
 
 
