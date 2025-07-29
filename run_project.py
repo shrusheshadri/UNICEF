@@ -552,10 +552,11 @@ html_output = f"""
 <!DOCTYPE html>
 <html>
 <head>
-<title>Population-Weighted Coverage Report</title>
+<title>Learning and Skills Data Analyst Consultant – Req. #581598</title>
 </head>
 <body>
-    <h1>Population-Weighted Coverage by U5MR Status</h1>
+    <h1>Learning and Skills Data Analyst Consultant – Req. #581598</h1>
+    <h2>Population-Weighted Coverage by U5MR Status</h2>
     <img src="data:image/png;base64,{data}" alt="Population-Weighted Coverage by U5MR Status Bar Chart">
     <h2>Interpretation of Results</h2>
     <p>{interpretation}</p>
