@@ -1,10 +1,12 @@
 🌍 UNICEF Maternal & Child Health Coverage Analysis
 Calculate and visualize population-weighted coverage of key maternal and newborn health indicators across countries and mortality groups.
 
+
 📌 Objectives
 Compute population-weighted averages for maternal & newborn health indicators using projected birth counts.
 Compare performance across country groups defined by Under-5 Mortality Rate (U5MR).
 Prepare clean data for visualizations and provide interpretations for policy discussions.
+
 
 🧮 Methodology
 Indicator Extraction: Data is sourced from official UNICEF datasets.
@@ -14,17 +16,21 @@ Indicator Extraction: Data is sourced from official UNICEF datasets.
 | 👶 UN World Population Prospects     | Birth projections             | 
 | ⚰️ U5MR Classification               | Mortality rates by country    | 
 
+
 Country Grouping: Based on Status.U5MR classification (high, moderate, low mortality).
 Population-Weighted Average:
 Weighted Average= ∑(coverage × births)/ ∑births
 ​ 
+
 Robustness: Handles missing values and zero-population entries for statistical accuracy.
+
 
 📂 Folder Structure
 ├── Raw data/
 │   ├── Raw Data/WPP2022_GEN_F01_DEMOGRAPHIC_INDICATORS_COMPACT_REV1.xlsx             # Health coverage indicators
 │   ├── Raw Data/GLOBAL_DATAFLOW_2018-2022.xlsx                                       # Projected births (2022)
 │   └── Raw Data/merged_country_data.csv                                              # Cleaned, merged dataset
+
 
 🧹 Preprocessing Steps for WPP2022_GEN_F01_DEMOGRAPHIC_INDICATORS_COMPACT_REV1.xlsx 
 Before analysis, the UN World Population Prospects (2022) Excel file was preprocessed to ensure clean and usable data:
@@ -33,19 +39,18 @@ Header Cleanup: Unfrozen Rows to allow smooth iteration during data reads.
                 Deleted Top 15 Rows, which included metadata and formatting unrelated to the tabular data.
 Visual Elements Removed: UN Logo and any other embedded graphics were deleted to avoid parsing issues. The cleaned file was saved as a .csv for programmatic uses. 
 
+
 ├── scripts/
 │   ├── run_project.py                # Orchestrates full analysis workflow
 │   └── user_profile.py               # Reproducibility & environment setup
 
+
 ├── output/
 │   └── Output/Results_html.png       # Final output data
 
+
 ├── README.md                         # Project documentation
-└── LICENSE
-📊 Dataset Sources
-📘 UNICEF Health Coverage Indicators Maternal & newborn indicators	UNICEF Data Portal
-👶 UN World Population Prospects	Birth projections	UN DESA Population Division
-⚰️ U5MR Classification	Mortality rates by country	UN IGME - Child Mortality
+
 
 ⚙️ Reproducibility
 user_profile.py sets up environment variables, locale, and working directory.
