@@ -25,11 +25,18 @@ Robustness: Handles missing values and zero-population entries for statistical a
 │   ├── Raw Data/WPP2022_GEN_F01_DEMOGRAPHIC_INDICATORS_COMPACT_REV1.xlsx             # Health coverage indicators
 │   ├── Raw Data/GLOBAL_DATAFLOW_2018-2022.xlsx                                       # Projected births (2022)
 │   └── Raw Data/merged_country_data.csv                                              # Cleaned, merged dataset
-│
+
+🧹 Preprocessing Steps for WPP2022_GEN_F01_DEMOGRAPHIC_INDICATORS_COMPACT_REV1.xlsx 
+Before analysis, the UN World Population Prospects (2022) Excel file was preprocessed to ensure clean and usable data:
+Sheets Cleaned: Both relevant sheets were edited.
+Header Cleanup: Unfrozen Rows to allow smooth iteration during data reads.
+                Deleted Top 15 Rows, which included metadata and formatting unrelated to the tabular data.
+Visual Elements Removed: UN Logo and any other embedded graphics were deleted to avoid parsing issues. The cleaned file was saved as a .csv for programmatic uses. 
+
 ├── scripts/
 │   ├── run_project.py                # Orchestrates full analysis workflow
 │   └── user_profile.py               # Reproducibility & environment setup
-│
+
 ├── output/
 │   └── Output/Results_html.png       # Final output data
 
@@ -46,5 +53,3 @@ run_project.py code adheres to modular structure and avoids hardcoding paths.
 All dependencies are listed in user_profile.py
 Data files stored in Raw data/ and outputs in Output/.
 Entire workflow can be rerun using run_project.py.
-
-
